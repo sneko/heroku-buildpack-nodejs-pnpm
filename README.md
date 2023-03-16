@@ -39,6 +39,18 @@ If you need to use the git url, you can use the `latest` tag to make sure you al
 heroku buildpacks:set https://github.com/TheSecurityDev/heroku-buildpack-nodejs-pnpm#latest -a my-app
 ```
 
+## Locking to a buildpack version
+
+Even though it's suggested to use the latest release, you may want to lock dependencies - including buildpacks - to a specific version.
+
+First, find the version you want from
+[the list of buildpack versions](https://github.com/heroku/heroku-buildpack-nodejs/tags).
+Then, specify that version with `buildpacks:set`:
+
+```
+heroku buildpacks:set https://github.com/heroku/heroku-buildpack-nodejs#v176 -a my-app
+```
+
 ### Chain Node with multiple buildpacks
 
 This buildpack automatically exports node, pnpm, npm, and any node_modules binaries
@@ -104,6 +116,7 @@ Or to just test a specific stack:
 ```
 make heroku-18-build
 make heroku-20-build
+make heroku-22-build
 ```
 
 The tests are run via the vendored
