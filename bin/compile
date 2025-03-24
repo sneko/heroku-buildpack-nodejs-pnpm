@@ -206,8 +206,9 @@ fi
 export YARN_CACHE_FOLDER NPM_CONFIG_CACHE
 
 install_bins() {
-  local node_engine npm_engine yarn_engine npm_version node_version
+  local package_manager node_engine npm_engine yarn_engine npm_version node_version
 
+  package_manager=$(read_json "$BUILD_DIR/package.json" ".packageManager")
   node_engine=$(read_json "$BUILD_DIR/package.json" ".engines.node")
   npm_engine=$(read_json "$BUILD_DIR/package.json" ".engines.npm")
   yarn_engine=$(read_json "$BUILD_DIR/package.json" ".engines.yarn")
@@ -238,7 +239,7 @@ install_bins() {
   if $PNPM; then
     meta_set "build-step" "install-pnpm"
     echo "Downloading and installing pnpm..."
-    npm install -g pnpm
+    npm install -g "${package_manager:-pnpm}"
     pnpm config set store-dir "$CACHE_DIR"/.pnpm-store
     echo "pnpm $(pnpm --version) installed"
   fi
